@@ -39,6 +39,7 @@ class RegistrarTest {
         assertEquals(List.of(), sally.getCourses());
     }
 
+
     @Test
     void studentCanEnroll() {
         sally.enrollIn(comp127);
@@ -79,6 +80,22 @@ class RegistrarTest {
     // This is a bit persnickety for day-to-day testing, but these kinds of checks are appropriate
     // for security sensitive or otherwise mission-critical code. Some people even add them as
     // runtime checks in the code, instead of writing them as tests.
+
+    
+    @Test
+    void clientsCannotModifyCourses() {
+       assertThrows(UnsupportedOperationException.class, ()->{
+            sally.getCourses().add(comp127);
+       });
+    }
+
+    @Test
+    void courseCannontModifyClients() {
+       assertThrows(UnsupportedOperationException.class, ()->{
+            comp127.getRoster().add(sally);
+       });
+    }
+
 
     @AfterEach
     public void checkInvariants() {
